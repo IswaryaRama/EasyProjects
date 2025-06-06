@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Shortener</title>
+    <script>
+        let url = {};
+        function shorten() {
+            const lUrl = document.getElementById('lUrl').value;
+            if (!lUrl) return;
+            const code = Math.random().toString(36).slice(2, 6);
+            url[code] = lUrl;
+            const sUrl = `${window.location.origin}${window.location.pathname}#${code}`;
+            document.getElementById('result').innerHTML = `<p>Short URL: <a href="${sUrl}">${sUrl}</a></p>`;
+            document.getElementById('lUrl').value = '';
+        }
+        window.onload = function() {
+            const code = window.location.hash.slice(1);
+            if (code && url[code]) {
+                window.location.href = url[code];
+            }
+        };
+    </script>
+</head>
+<body style="font-family: sans-serif; max-width: 500px; padding: 25px;">
+    <h1>URL Shortener</h1>
+    <input type="url" id="lUrl" placeholder="Enter long URL" 
+           style="width: 100%; padding: 10px; margin-bottom: 10px;">
+    <button onclick="shorten()" 
+            style="padding: 10px 15px; background: yellowgreen; color: white; border: none;">
+        Shorten URL
+    </button>
+    <div id="result" style="margin-top: 25px;"></div>
+</body>
+</html>
